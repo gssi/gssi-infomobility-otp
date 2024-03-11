@@ -1401,6 +1401,9 @@ body, html{
     #otp-planner-optionsWidget #otp-planner-optionsWidget-modeSelector-widgets{
         display: none;
     }
+    .leaflet-control-attribution.leaflet-control{
+        bottom: 70px;
+    }
 }
 @media (max-width: 768px){
     #show-routes-button{
