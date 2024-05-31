@@ -81,13 +81,14 @@ otp.config = {
     //rfidroute_api: "http://localhost:4000/api/realtime/rfidshift/",
 
     routeNameLabels: true,
-    realtimeTracking: false,
+    realtimeTracking: true,
 
     //REMOTE API
-    realtime_api: "http://51.145.149.130/gpsdata/api/bus/filter/driverid/realtime",
-    unitids_api: "http://51.145.149.130/gpsdata/api/bus/filter/unitid",
-    driverids_api: "http://51.145.149.130/gpsdata/api/bus/filter/driverid",
-    rfidroute_api: "http://51.145.149.130/rfidroute/api/realtime/rfidshift/",
+    realtime_api: "https://trasporti.opendatalaquila.it/gpsdata/api/bus/filter/driverid/realtime",
+    unitids_api: "https://trasporti.opendatalaquila.it/gpsdata/api/bus/filter/unitid",
+    driverids_api: "http://trasporti.opendatalaquila.it/gpsdata/api/bus/filter/driverid",
+    rfidroute_api: "http://trasporti.opendatalaquila.it/rfidroute/api/realtime/rfidshift/",
+    vehicleontrip_api: "https://trasporti.opendatalaquila.it/rfidroute/search/trip",
 
 
     icityaq: {
