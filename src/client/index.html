@@ -238,9 +238,9 @@ $(document).ready(function() {
     }
 
     var realtime_marker, alert_realtime = $("#alert-realtime"), last_gps_datetime, realtime_interval, multirfid, realtime_markers_layer = L.featureGroup(), bus_list = {}, unitids, busposition_ws, tripname_realtime, fitmap, map_bounds, connection_attempts = 0, realtime_error;
-    const EXPIRATION_TIME = 13000, MAX_CONNECTION_ATTEMPTS = 5, DRIVERID_EXPIRATION = 12*60*60*1000, //set expiration time for not updated bus positions and driverid last_update
-            TIME_UPDATE = 7000, //time to update real time data
-            REALTIME_RANGE = 30 * 1000; //bus updates must be within this time range
+    const EXPIRATION_TIME = 60000, MAX_CONNECTION_ATTEMPTS = 10, DRIVERID_EXPIRATION = 12*60*60*1000, //set expiration time for not updated bus positions and driverid last_update
+            TIME_UPDATE = 30000, //time to update real time data
+            REALTIME_RANGE = 60 * 1000; //bus updates must be within this time range
 
     const STREAM_TYPE = "req"; // or ws - websocket
 
@@ -265,7 +265,7 @@ $(document).ready(function() {
     var realTimeBusIcon = L.divIcon({
       //iconUrl: otp.config.resourcePath + 'images/bus-icon.svg',
       shadowUrl: '',
-      iconSize:     [40, 40], // size of the icon
+      iconSize:     [35, 35], // size of the icon
       //shadowSize:   [50, 64], // size of the shadow
       iconAnchor:   [18, 38], // point of the icon which will correspond to marker's location
       //shadowAnchor: [4, 62],  // the same for the shadow
@@ -392,7 +392,7 @@ $(document).ready(function() {
         getBusPositions(buses)
       }, TIME_UPDATE)
     }
-    const stopRealTime = () => {
+    stopRealTime = () => {
       closeStream("close")
       removeBusMarkers()
       alert_realtime.hide().html("Real Time");
@@ -568,7 +568,7 @@ $(document).ready(function() {
     const updateMarkers = (results) => {
       //get current time
       const current_time = Date.now();
-      const realtime_min_time = new Date(current_time - REALTIME_RANGE) // 30 secs
+      const realtime_min_time = new Date(current_time - REALTIME_RANGE) // 60 secs
       const driverid_valid_time = new Date(current_time - DRIVERID_EXPIRATION); // 12 hours
       let check_realtime = false;
 
@@ -578,20 +578,6 @@ $(document).ready(function() {
 
       //alert_realtime.html('Real Time <br>Linea: <strong>' + tripname_realtime + '</strong><br><span>Ultimo aggiornamento: <strong>' + moment().startOf('hour').fromNow();  + '</strong></span><span>X</span>')
       results.forEach((unit) => {
-
-
-        //check if driverID is still valid
-        if(unit.driverid_lastupdate < driverid_valid_time){
-          //bus position are not valid anymore
-          //remove bus from bus_list
-          global_map.removeLayer(bus_list[unit.unitID].marker);
-          delete bus_list[unit.unitID]
-          if(Object.keys(bus_list).length === 0){
-            closeStream()
-            alert_realtime.html(TEMPLATES.REALTIME_INFO.offline(tripname_realtime))
-          }
-          return
-        }
 
         if(bus_list.hasOwnProperty(unit.unitID)){
           //get saved instance
