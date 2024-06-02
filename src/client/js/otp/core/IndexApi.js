@@ -278,6 +278,27 @@ otp.core.IndexApi = otp.Class({
         });
     },
 
+    getVehicleOnTrip: function(params, callbackTarget, callback) {
+        var url = otp.config.vehicleontrip_api;
+        $.ajax(url, {
+            data: {
+                startDateTime: params.startDateTime,
+                endDateTime: params.endDateTime,
+                tripShortName: params.tripShortName
+            },
+            success: function(data) {
+                data.leg_index = params.leg_index;
+                data.trip_name = params.trip_name;
+                data.trip_max_time = params.trip_max_time;
+                data.leg_div = params.legDiv;
+                callback.call(callbackTarget, data);
+            },
+            error: function() {
+                callback.call(callbackTarget, null);
+            }
+        });
+    },
+
     getRfidFromTripShift: function(params, callbackTarget, callback) {
         var url = otp.config.rfidroute_api + params.trip_id;
         $.ajax(url, {
@@ -356,6 +377,26 @@ otp.core.IndexApi = otp.Class({
         }).fail(function(err) {
             callback.call(callbackTarget, null);
         })
-    }
+    },
+    getBusPosition: function(params, callbackTarget, callback) {
+        //debugger;
+        var url = otp.config.unitids_api;
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: JSON.stringify({
+                unitids: params.unitids,
+                unitsns: params.unitsns,
+                realtime: params.realtime
+            }),
+            cache: false,
+            contentType: 'application/json'
+        }).done(function(data) {
+            callback.call(callbackTarget, data);
+        }).fail(function(err) {
+            callback.call(callbackTarget, null);
+        })
+    },
+
 
 });
