@@ -138,6 +138,7 @@ otp.widgets.ItinerariesWidget =
                 var itin = $(this).data('itin');
                 this_.module.drawItinerary(itin);
                 this_.activeIndex = $(this).data('index');
+                //LIVE BUTTON - renderLiveButtons(itin)
             });
 
             $('<div id="'+divId+'-'+i+'"></div>')
@@ -330,7 +331,7 @@ otp.widgets.ItinerariesWidget =
                 }
 
             }
-            div.append('<div class="otp-itinsAccord-header-time" style="position: absolute; right: 25px; top: 17px;">' + itin.getDurationStr() + '</div>');
+            div.append('<div class="otp-itinsAccord-header-time" style="position: absolute; right: 25px; top: 22px;">' + itin.getDurationStr() + '</div>');
 
             if(itin.groupSize) {
                 var segment = $('<div class="otp-itinsAccord-header-groupSize">'+itin.groupSize+'</div>')
@@ -390,6 +391,8 @@ otp.widgets.ItinerariesWidget =
     // returns jQuery object
     renderItinerary : function(itin, index, alerts) {
         var this_ = this;
+        // reset previous real time
+        window.stopRealTime()
 
         // render legs
         var divId = this.module.id+"-itinAccord-"+index;
@@ -437,29 +440,32 @@ otp.widgets.ItinerariesWidget =
                     const params = {
                         trip_id: leg.tripId,
                         leg_index: l,
-                        trip_name: leg.tripShortName,
-                        trip_max_time: max_time
+                        trip_max_time: max_time,
+                        tripShortName: leg.tripShortName,
+                        trip_name: leg.routeShortName,
+                        headsign: leg.headsign,
+                        startDateTime: moment().startOf('day').format('YYYY-MM-DDTHH:mm:ss'),
+                        endDateTime: moment().endOf('day').format('YYYY-MM-DDTHH:mm:ss'),
+                        legDiv,
                     };
-                    this_.module.webapp.indexApi.getRfidFromTripShift(params, this_, function(result){
+                    this_.module.webapp.indexApi.getVehicleOnTrip(params, this_, function(result){
 
-                        const leg_index = result.leg_index;
+                        const leg_div = result.leg_div;
                         const trip_name = result.trip_name;
                         const trip_max_time = result.trip_max_time;
                         //TEST - #DACANCELLARE
                         //result = JSON.parse(`{ "found": true, "data": [ { "rfid_id": 19, "rfid_code": "007C0053A422", "rs_shift_fk": 42, "rfid_created": "2020-11-17T13:06:39.000Z", "trip_shifts": [ { "trip_shift_id": 379, "trip_id": "1:4337", "trip_name": "6S", "departure_time": 67200, "from": "Piazza Paganica lato monumento SP103", "arrival_time": 70500, "to": "L'AQUILONE - CENTRO COMMERCIALE", "route": "6S", "from_stop_id": "1:F00130", "to_stop_id": "1:D00100", "pattern_id": "1:6S:1:03", "pattern_desc": "Da Piazza Paganica lato monumento SP103 - A L'AQUILONE - CENTRO COMMERCIALE", "shift_fk": 42, "ts_created": "2020-11-17T13:03:55.000Z" } ] }, { "rfid_id": 19, "rfid_code": "003A008ACF05", "rs_shift_fk": 42, "rfid_created": "2020-11-17T13:06:39.000Z", "trip_shifts": [ { "trip_shift_id": 379, "trip_id": "1:4337", "trip_name": "6S", "departure_time": 67200, "from": "Piazza Paganica lato monumento SP103", "arrival_time": 70500, "to": "L'AQUILONE - CENTRO COMMERCIALE", "route": "6S", "from_stop_id": "1:F00130", "to_stop_id": "1:D00100", "pattern_id": "1:6S:1:03", "pattern_desc": "Da Piazza Paganica lato monumento SP103 - A L'AQUILONE - CENTRO COMMERCIALE", "shift_fk": 42, "ts_created": "2020-11-17T13:03:55.000Z" } ] } ] }`);
+                        const currentVehicle = result?.tripSegments?.tripSegment?.vehicles?.vehicle ?? {};
+                        if(currentVehicle.depot && currentVehicle.externalNumber?.value){
+                            //if yes then check if there is gps position with that unitId
+                            const params = {
+                                unitsns: [currentVehicle.externalNumber.value],
+                                realtime: true
+                            }
 
-                        if(result.found){
-                            //if yes then check if there is gps position with that RFID at that moment
-
-                            //OLD - check if there are multiple rfids
-                            //OLD - const leg_index = result.leg_index;
-                            //OLD - const trip_name = result.trip_name;
-
-                            //data object is always an array of rfids
-                            const rfids = result.data.map(rfid => rfid.rfid_code);
-                            this_.module.webapp.indexApi.getRealTimeDriverid(rfids, this_, function(live){
-                                if(live && live.length > 0){
-                                    //if one or more bus have those driverids attached and they are moving now -> add live button
+                            this_.module.webapp.indexApi.getBusPosition(params, this_, function(live){
+                                if(live?.length){
+                                    //if one or more bus have been found they are moving now -> add live button
 
                                     //create span element by using vanilla JS, to prevent bad strings due to JSON parse
                                     let span = document.createElement("span");
@@ -471,31 +477,11 @@ otp.widgets.ItinerariesWidget =
                                     span.dataset.maxtime = trip_max_time;
                                     span.innerText = "LIVE";
 
-                                    $("#" + divId +"-details-leg-" + leg_index).append(span)
+                                    leg_div.append(span)
                                     //$("#details-leg-" + leg_index).append(`<span class="live-button" data-multirfid="true" data-driverid="${JSON.stringify(rfids)}" data-tripname="${trip_name}">Live</span>`);
                                     //$("#details-leg-" + leg_index).append('<span class="live-button" data-multirfid="false" data-driverid="' + driverid + '" data-tripname="' + trip_name + '">Live</span>');
                                 }
                             })
-
-                            /*if(result.data.length > 0){
-                                const multirfid = result.data.map(rfid => rfid.rfid_code);
-                                this_.module.webapp.indexApi.checkRealTimeMultiDriverid(multirfid, this_, function(live){
-                                    debugger;
-                                    if(live && live.length > 0){
-                                        //if yes -> add live button
-                                        $("#details-leg-" + leg_index).append(`<span class="live-button" data-multirfid="true" data-driverid="${JSON.stringify(multirfid)}" data-tripname="${trip_name}">Live</span>`);
-                                    }
-                                })
-                            }else{
-                                const driverid = result.data[0].rfid_code;
-                                this_.module.webapp.indexApi.checkRealTimeByDriverid(driverid, this_, function(live){
-                                    debugger;
-                                    if(live && live.length > 0){
-                                        //if yes -> add live buttn
-                                        $("#details-leg-" + leg_index).append('<span class="live-button" data-multirfid="false" data-driverid="' + driverid + '" data-tripname="' + trip_name + '">Live</span>');
-                                    }
-                                })
-                            }*/
 
                         }
                     });
@@ -1022,6 +1008,5 @@ otp.widgets.ItinerariesWidget =
             }
 
         }
-
 
 });
