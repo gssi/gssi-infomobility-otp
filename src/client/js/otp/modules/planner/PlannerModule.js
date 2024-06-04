@@ -663,12 +663,17 @@ otp.modules.planner.PlannerModule =
             return '#aaa';
         },
         clearTrip : function() {
-
+            // Keep startLatLng and endLatLng values and markers because input text doesn't get removed on closing itineraryWidget
+            // else remove tripOption inputs too
             if(this.startMarker) this.markerLayer.removeLayer(this.startMarker);
             this.startName = this.startLatLng = this.startMarker = null;
+            $(this.optionsWidget.controls.locations.startInput).val(''); // empty start input
+            // this.startName = this.startMarker = null;
 
             if(this.endMarker) this.markerLayer.removeLayer(this.endMarker);
             this.endName = this.endLatLng = this.endMarker = null;
+            $(this.optionsWidget.controls.locations.endInput).val(''); // empty end input
+            // this.endName = this.endMarker = null;
 
             this.pathLayer.clearLayers();
             this.pathMarkerLayer.clearLayers();
