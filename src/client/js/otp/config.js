@@ -49,20 +49,20 @@ otp.config = {
 
     /**
      * The OTP web service locations
-     */
+
     hostname : "",
     resourcePath: "",
-
+     */
 
     localHostname: "http://localhost:8080",
 
-    /* DEPLOY
+    /* DEPLOY*/
 
     hostname : "https://trasporti.opendatalaquila.it/infomobility",
 
     resourcePath: "/infomobility/",
 
-    */
+
 
 
     //municoderHostname : "http://localhost:8080",
