@@ -742,7 +742,7 @@ otp.widgets.ItinerariesWidget =
 
             var stopHtml = '<div class="otp-itin-leg-endpointDescSub">';
             if( typeof leg.from.stopCode != 'undefined' ) {
-                stopHtml += _tr("Stop") + ' #'+leg.from.stopCode+ ' ';
+                //stopHtml += _tr("Stop") + ' #'+leg.from.stopCode+ ' ';
             }
             //stopHtml += '[<a href="#">' + _tr("Stop Viewer") +'</a>]</div>';
             stopHtml += '<a href="#" class="timeline-button"><i class="fas fa-clock"></i> ' + _tr("Stop Viewer") +'</a></div>';
