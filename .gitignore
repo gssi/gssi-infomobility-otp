@@ -38,3 +38,4 @@ data/report/
 data/logs/*
 data/*.zip
 data/*.obj
+data/logs/request.log

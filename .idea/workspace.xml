@@ -10,20 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="684756b6-b2bc-4542-a5db-580c1d8923ef" name="Default Changelist" comment="setup ivu API">
-      <change afterPath="$PROJECT_DIR$/src/client/js/otp/locale/en-EN.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/js/otp/locale/en-US.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/opendata/v2.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/GTFS_30102022-2.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/Graph.obj" beforeDir="false" afterPath="$PROJECT_DIR$/data/Graph.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/logs/request.log" beforeDir="false" afterPath="$PROJECT_DIR$/data/logs/request.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/js/otp/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/js/otp/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/js/otp/core/GeocoderInfomobility.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/js/otp/core/GeocoderInfomobility.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/js/otp/locale/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/js/otp/locale/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/js/otp/locale/it-IT.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/js/otp/locale/it-IT.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/js/otp/locale/it.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/js/otp/locale/it.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/js/otp/widgets/transit/StopViewerWidget.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/js/otp/widgets/transit/StopViewerWidget.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/js/otp/widgets/tripoptions/TripOptionsWidget.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/js/otp/widgets/tripoptions/TripOptionsWidget.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/js/otp/core/Map.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/js/otp/core/Map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/js/otp/core/MapContextMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/js/otp/core/MapContextMenu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/js/otp/core/PopupMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/js/otp/core/PopupMenu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/js/otp/modules/planner/ItinerariesWidget.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/js/otp/modules/planner/ItinerariesWidget.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/js/otp/widgets/tripoptions/tripoptions-templates.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/js/otp/widgets/tripoptions/tripoptions-templates.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/opendata/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/opendata/style.css" afterDir="false" />
     </list>
