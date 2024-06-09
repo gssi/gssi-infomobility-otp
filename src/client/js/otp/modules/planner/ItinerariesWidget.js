@@ -417,7 +417,9 @@ otp.widgets.ItinerariesWidget =
             /* BUS POSITION LIVE BUTTON #LIVEBUTTON */
             //check for realtime vehicles data
             //check if leg.mode is bus
-            if(otp.config.realtimeTracking && leg.mode === "BUS"){
+            // check if service date of leg is today
+            const currentDate = moment().format("YYYYMMDD");
+            if(otp.config.realtimeTracking && leg.mode === "BUS" && leg.serviceDate === currentDate){
                 //check trip departure and arrival time
                 //if departure time is greater than current time, then the bus is not moving yet for that trip, so real time is not available
                 //a tolerance value has been introduced to allow users to to track a bus before departure time.
