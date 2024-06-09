@@ -17,15 +17,15 @@ otp.namespace("otp.core");
 
 otp.core.GeocoderInfomobility = otp.Class({
 
-    url : null,
-    addressParam : null,
+    url: null,
+    addressParam: null,
 
-    initialize : function(url, addressParam) {
+    initialize: function (url, addressParam) {
         this.url = url;
         this.addressParam = addressParam;
     },
 
-    geocode : function(address, setResultsCallback) {
+    geocode: function (address, setResultsCallback) {
 
         var params = {
             "format": "json",
@@ -41,21 +41,35 @@ otp.core.GeocoderInfomobility = otp.Class({
 
         // Avoid out-of-order responses from the geocoding service. see #1419
         lastXhr = $.ajax(this.url, {
-            data : params,
+            data: params,
             type: "get",
-            success: function(data, status, xhr) {
-                if (xhr === lastXhr){
-                    if((typeof data) == "string") data = JSON.parse(data);
+            success: function (data, status, xhr) {
+                if (xhr === lastXhr) {
+                    if ((typeof data) == "string") data = JSON.parse(data);
                     var results = [];
                     data.forEach(function (item) {
                         //debugger;
 
                         //var resultObj = $(this);
+                        const { road, house_number, village, city, county } = item.address;
+                        const customAddress1 = [road, house_number].filter(i => i).join(', ');
+                        const customAddress2 = [village, city, county].filter(i => i).join(', ');
+                        let customDisplayName = [customAddress1, customAddress2].join(', ');
+                        let customLabel;
+                        // '-----' required to identify location name while rendering menu item
+                        if(item.name && item.name !== road){
+                            customLabel =  `<span class="geocoding-result-name">${item.name}</span><span class="geocoding-result-address">${customDisplayName}</span>`
+                            customDisplayName = [item.name, customDisplayName].join(', ');
+                        }else{
+                            customLabel = `<span class="geocoding-result-name">${customAddress1}</span><span class="geocoding-result-address">${customAddress2}</span>`
+                        }
 
                         var resultObj = {
-                            description : item.display_name,
-                            lat : item.lat,
-                            lng : item.lon
+                            //description : item.display_name,
+                            description: customDisplayName,
+                            customLabel,
+                            lat: item.lat,
+                            lng: item.lon
                         };
                         //console.log(resultObj)
                         results.push(resultObj);

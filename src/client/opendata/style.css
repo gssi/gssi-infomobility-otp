@@ -51,6 +51,11 @@ body, html{
     right: 50%;
     transform: translateX(50%);
 }
+.text-overflow{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 #map.leaflet-container{
     background: url(../images/blur_map.jpg);
     background-repeat: no-repeat;
@@ -252,6 +257,7 @@ body, html{
     font-size: 16px;
     font-weight: 400;
     padding-left: 40px;
+    padding-bottom: 0;
     outline: none;
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
     box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
@@ -366,14 +372,28 @@ body, html{
     background: none;
     border-radius: 0;
     /*padding: 4px 0.5em;*/
-    padding: 8px 0.5em;
+    padding: 10px 0.5em;
     font-size: 0.9em;
     border: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .ui-autocomplete.ui-menu .ui-menu-item .ui-state-focus{
     background: #f6f6f6;
     margin: 0;
     border: none;
+}
+#otp-planner-optionsWidget .ui-autocomplete.ui-menu{
+    width: calc(90% - 27px) !important;
+}
+#otp-planner-optionsWidget .ui-autocomplete.ui-menu .geocoding-result-name{
+    font-weight: 600;
+    margin-right: 10px;
+}
+#otp-planner-optionsWidget .ui-autocomplete.ui-menu .geocoding-result-address{
+    color: #aaaaaa;
+    font-size: 0.9em;
 }
 #otp-planner-optionsWidget-modeSelector-widgets{
     margin-top: 10px;
@@ -1706,6 +1726,9 @@ body, html{
     #otp-planner-optionsWidget-preferredRoutes-selectorWidget .otp-preferredRoutesSelectorWidget-middle > br,
     #otp-planner-optionsWidget-bannedRoutes-selectorWidget .otp-preferredRoutesSelectorWidget-middle > br {
         display: none;
+    }
+    .ui-autocomplete.ui-menu{
+        width: calc(90% - 27px) !important;
     }
 }
 

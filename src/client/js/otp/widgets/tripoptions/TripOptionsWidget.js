@@ -276,7 +276,12 @@ otp.widgets.tripoptions.LocationsSelector =
             source: function(request, response) {
                 this_.geocoders[this_.activeIndex].geocode(request.term, function(results) {
                     console.log("got results "+results.length);
-                    response.call(this, _.pluck(results, 'description'));
+                    // response.call(this, _.pluck(results, 'description'));
+                    if(results?.length && results[0].customLabel){
+                        response.call(this, results.map(i => ({label: i.customLabel, value: i.description})));
+                    }else{
+                        response.call(this, _.pluck(results, 'description'));
+                    }
                     input.data("results", this_.getResultLookup(results));
                 });
             },
@@ -287,6 +292,7 @@ otp.widgets.tripoptions.LocationsSelector =
                 setterFunction.call(this_.tripWidget.module, latlng, false, result.description);
                 this_.tripWidget.inputChanged();
             },
+            appendTo: "#" + this_.tripWidget.id,
         })
         .dblclick(function() {
             $(this).select();
