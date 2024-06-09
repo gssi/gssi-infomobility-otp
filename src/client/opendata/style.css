@@ -724,6 +724,9 @@ body, html{
     display: inline-block;
     margin-left: 10px;
 }
+.otp-itin-leg-endpointDescSub > a {
+    padding: 10px 20px;
+}
 .otp-itin-leg-buffer{
     border-left: 2px solid #f6f6f6;
     margin-left: 65px;
@@ -742,7 +745,7 @@ body, html{
     background: #f6f6f6;
     color: #009AC8;
     font-size: 12px;
-    padding: 5px 15px;
+    padding: 10px 20px;
     border-radius: 5px;
 }
 .otp-itin-num-of-stops{
