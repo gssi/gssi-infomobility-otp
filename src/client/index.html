@@ -1081,6 +1081,7 @@ $(document).ready(function() {
     /* */
 
     $("#show-footer-about").click(function(e){
+        e.preventDefault();
         if(footer_about.hasClass("footer-about-hidden")){
           footer_about.removeClass("footer-about-hidden")
           $(this).addClass("flip")

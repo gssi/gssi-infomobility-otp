@@ -752,6 +752,7 @@ otp.widgets.ItinerariesWidget =
             $(stopHtml)
             .appendTo(legDiv)
             .click(function(evt) {
+                evt.preventDefault();
                 if(!this_.module.stopViewerWidget) {
                     this_.module.stopViewerWidget = new otp.widgets.transit.StopViewerWidget("otp-"+this_.module.id+"-stopViewerWidget", this_.module);
                     this_.module.stopViewerWidget.$().offset({top: evt.clientY, left: evt.clientX});
@@ -778,6 +779,7 @@ otp.widgets.ItinerariesWidget =
             $('<span class="otp-itin-tripViewerButton" style=""><a href="#"><i class="fas fa-road"></i> ' + _tr("Trip Viewer") + '</a></span>')
             .appendTo(inTransitDiv)
             .click(function(evt) {
+                evt.preventDefault();
                 if(!this_.module.tripViewerWidget) {
                     this_.module.tripViewerWidget = new otp.widgets.transit.TripViewerWidget("otp-"+this_.module.id+"-tripViewerWidget", this_.module);
                     this_.module.tripViewerWidget.$().offset({top: evt.clientY, left: evt.clientX});
