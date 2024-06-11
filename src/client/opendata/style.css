@@ -1466,7 +1466,7 @@ body, html{
         display: none !important;
     }
     .fl-page-nav-toggle-icon.fl-page-nav-toggle-visible-medium-mobile .fl-page-nav .navbar-toggle {
-        top: 30px;
+        top: 35px;
     }
     #opendata-footer{
         display: none;
