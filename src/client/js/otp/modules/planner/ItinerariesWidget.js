@@ -331,7 +331,7 @@ otp.widgets.ItinerariesWidget =
                 }
 
             }
-            div.append('<div class="otp-itinsAccord-header-time" style="position: absolute; right: 25px; top: 22px;">' + itin.getDurationStr() + '</div>');
+            div.append('<div class="otp-itinsAccord-header-time" style="position: absolute; right: 25px; top: 19px;">' + itin.getDurationStr() + '</div>');
 
             if(itin.groupSize) {
                 var segment = $('<div class="otp-itinsAccord-header-groupSize">'+itin.groupSize+'</div>')

@@ -538,7 +538,7 @@ body, html{
     border-radius: 0;
 }
 #planner-itinWidget #planner-itinWidget-itinsAccord > h3.ui-accordion-header > div > .otp-itinsAccord-header-content{
-    padding-right: 65px;
+    padding-right: 50px;
 }
 .otp-itinsAccord-header-time{
     font-size: 14px;
