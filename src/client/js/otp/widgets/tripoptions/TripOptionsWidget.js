@@ -396,7 +396,7 @@ otp.widgets.tripoptions.TimeSelector =
                     e.currentTarget.value = moment().format("YYYY-MM-DD");
                 }
                 this_.tripWidget.inputChanged({
-                    date : moment(e.currentTarget.value, "YYYY-MM-DD").format("DD/MM/YYYY")
+                    date : moment(e.currentTarget.value, "YYYY-MM-DD").format(otp.config.locale.time.date_format)
                 });
             })
 
@@ -459,12 +459,16 @@ otp.widgets.tripoptions.TimeSelector =
         //var m = moment(data.queryParams.date+" "+data.queryParams.time, "MM-DD-YYYY h:mma");
         //$('#'+this.id+'-picker').datepicker("setDate", new Date(m));
         if(data.queryParams.date) {
-            $('#'+this.id+'-date').datepicker("setDate", new Date(moment(data.queryParams.date, otp.config.locale.time.date_format)));
-            this.tripWidget.module.date = data.queryParams.date;
+            //$('#'+this.id+'-date').datepicker("setDate", new Date(moment(data.queryParams.date, otp.config.locale.time.date_format)));
+            const formattedDate = moment(data.queryParams.date, 'MM-DD-YYYY');
+            $('#'+this.id+'-date-date').val(formattedDate.format("YYYY-MM-DD"));
+            this.tripWidget.module.date = formattedDate.format(otp.config.locale.time.date_format);
         }
         if(data.queryParams.time) {
-            $('#'+this.id+'-time').val(moment(data.queryParams.time, otp.config.locale.time.time_format).format(otp.config.locale.time.time_format));
-            this.tripWidget.module.time = data.queryParams.time;
+            //$('#'+this.id+'-time').val(moment(data.queryParams.time, otp.config.locale.time.time_format).format(otp.config.locale.time.time_format));
+            const formattedTime = moment(data.queryParams.time, 'hh:mm A').format(otp.config.timeFormat);
+            $('#'+this.id+'-time-time').val(formattedTime);
+            this.tripWidget.module.time = formattedTime;
         }
         if(data.queryParams.arriveBy === true || data.queryParams.arriveBy === "true") {
             this.tripWidget.module.arriveBy = true;
