@@ -715,8 +715,9 @@ body, html{
 }
 .otp-itin-leg-endpointDesc{
     font-size: 1em;
-    border-left: 2px solid #f6f6f6;
+    /*border-left: 2px solid #f6f6f6;*/
     margin-left: 60px;
+    border: none;
 }
 .otp-itin-leg-endpointDescSub{
     font-size: 1em;
@@ -728,8 +729,9 @@ body, html{
     padding: 10px 20px;
 }
 .otp-itin-leg-buffer{
-    border-left: 2px solid #f6f6f6;
+    /*border-left: 2px solid #f6f6f6;*/
     margin-left: 65px;
+    border: none;
 }
 .otp-itin-leg-elapsedDesc{
     padding-top: 5px;
