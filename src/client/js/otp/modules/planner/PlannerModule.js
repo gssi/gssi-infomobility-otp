@@ -186,7 +186,10 @@ otp.modules.planner.PlannerModule =
             // check URL params for restored trip
             if("fromPlace" in this.webapp.urlParams && "toPlace" in this.webapp.urlParams) {
                 if("itinIndex" in this.webapp.urlParams) this.restoredItinIndex = this.webapp.urlParams["itinIndex"];
-                this.restoreTrip(_.omit(this.webapp.urlParams, ["module", "itinIndex"]));
+
+                //removed 'module' term from omit arguments to handle different date format while restoring trip plan
+                //this.restoreTrip(_.omit(this.webapp.urlParams, ["module", "itinIndex"]));
+                this.restoreTrip(_.omit(this.webapp.urlParams, ["itinIndex"]));
             }
         },
 

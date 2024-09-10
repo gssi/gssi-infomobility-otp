@@ -460,9 +460,15 @@ otp.widgets.tripoptions.TimeSelector =
         //$('#'+this.id+'-picker').datepicker("setDate", new Date(m));
         if(data.queryParams.date) {
             //$('#'+this.id+'-date').datepicker("setDate", new Date(moment(data.queryParams.date, otp.config.locale.time.date_format)));
-            const formattedDate = moment(data.queryParams.date, 'MM-DD-YYYY');
+            let formattedDate;
+            if(data.queryParams.module){ //restore date
+                formattedDate = moment(data.queryParams.date, 'MM-DD-YYYY');
+                this.tripWidget.module.date = formattedDate.format(otp.config.locale.time.date_format);
+            } else {
+                formattedDate = moment(data.queryParams.date, otp.config.locale.time.date_format);
+                this.tripWidget.module.date = data.queryParams.date
+            }
             $('#'+this.id+'-date-date').val(formattedDate.format("YYYY-MM-DD"));
-            this.tripWidget.module.date = formattedDate.format(otp.config.locale.time.date_format);
         }
         if(data.queryParams.time) {
             //$('#'+this.id+'-time').val(moment(data.queryParams.time, otp.config.locale.time.time_format).format(otp.config.locale.time.time_format));
