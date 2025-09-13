@@ -9,6 +9,47 @@
 <title>Infomobilità L'Aquila</title>
 <base href="/infomobility/">
 
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#009ddc">
+  <!-- For old IEs -->
+  <link rel="shortcut icon" href="./images/favicons-bus/favicon.ico" />
+
+  <!-- For new browsers - multisize ico  -->
+  <link rel="icon" type="image/x-icon" sizes="16x16 32x32" href="./images/favicons-bus/favicon.ico">
+
+  <!-- For iPad with high-resolution Retina display running iOS ≥ 7: -->
+  <link rel="apple-touch-icon" sizes="152x152" href="./images/favicons-bus/favicon-152-precomposed.png">
+
+  <!-- For iPad with high-resolution Retina display running iOS ≤ 6: -->
+  <link rel="apple-touch-icon" sizes="144x144" href="./images/favicons-bus/favicon-144-precomposed.png">
+
+  <!-- For iPhone with high-resolution Retina display running iOS ≥ 7: -->
+  <link rel="apple-touch-icon" sizes="120x120" href="./images/favicons-bus/favicon-120-precomposed.png">
+
+  <!-- For iPhone with high-resolution Retina display running iOS ≤ 6: -->
+  <link rel="apple-touch-icon" sizes="114x114" href="./images/favicons-bus/favicon-114-precomposed.png">
+
+  <!-- For iPhone 6+ -->
+  <link rel="apple-touch-icon" sizes="180x180" href="./images/favicons-bus/favicon-180-precomposed.png">
+
+  <!-- For first- and second-generation iPad: -->
+  <link rel="apple-touch-icon" sizes="72x72" href="./images/favicons-bus/favicon-72-precomposed.png">
+
+  <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+  <link rel="apple-touch-icon" sizes="57x57" href="./images/favicons-bus/favicon-57.png">
+
+  <!-- For Old Chrome -->
+  <link rel="icon" sizes="32x32" href="./images/favicons-bus/favicon-32.png" >
+
+  <!-- For IE10 Metro -->
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+  <meta name="msapplication-TileImage" content="./images/favicons-bus/favicon-144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <!-- Chrome for Android -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" sizes="192x192" href="./images/favicons-bus/favicon-192.png">
+
 <!--  Mobile Viewport Fix -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -35,7 +76,13 @@
   <link rel="stylesheet" href="opendata/autoptimize.css" />
   <link rel="stylesheet" href="opendata/autoptimize_single.css" />
   <link rel="stylesheet" href="opendata/style.css" />
-
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js")
+              .then(() => console.log("Service Worker registrato"))
+              .catch((err) => console.error("Errore SW:", err));
+    }
+  </script>
 <!--Loads jquery, underscore, json2, momentjs and raphael makes 7 requests less-->
 <script src="//cdn.jsdelivr.net/g/jquery@1.9.1,underscorejs@1.4.2,json2@0.1,momentjs@1.7.2,raphael@2.1.2"></script>
 
@@ -222,7 +269,7 @@ Analyst's webinterface was broken by that
 
 <!-- load ICH templates and create the webapp at startup -->
 <script type="text/javascript" language="javascript">
-$(document).ready(function() {
+  $(document).ready(function() {
 
     // CHECK LAYOUT
 
@@ -950,6 +997,22 @@ $(document).ready(function() {
 
 <div id="otp-spinner"><img src="images/spinner.gif"></div>
 
+<div id="installPwaModal" class="pwaModal">
+  <div class="modal-content">
+    <h4>Installa l'app sul tuo dispositivo</h4>
+    <p>Oppure scegli dal menù del browser <b>Aggiungi alla schemata Home</b> per un accesso più rapido</p>
+    <button id="installPwaButton">Installa</button>
+    <button class="closePwaModal">Non adesso</button>
+  </div>
+</div>
+<div id="addToHomeModal" class="pwaModal">
+  <div class="modal-content">
+    <h4>Aggiungi l'app al dispositivo</h4>
+    <p>Per installare l’app clicca su <img src="./images/share-apple.svg"> e scegli <b>Aggiungi alla schemata Home</b></p>
+    <button class="closePwaModal">Chiudi</button>
+  </div>
+</div>
+
 <script>
 
 </script>
@@ -961,8 +1024,47 @@ $(document).ready(function() {
     return false;
   };*/
   var isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)
+  var isApple = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)/i)
   //Collapsed = Open
+  let deferredPrompt, installPwaModal;
+  const isVisited = localStorage.getItem('visited')
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installPwaModal = $("#installPwaModal")
+
+    if(isMobile && !isApple && !isVisited){
+      installPwaModal.fadeIn().css("display", "flex")
+      localStorage.setItem('visited', "true")
+    }
+
+  });
+
   $(document).ready(function(){
+      if(isApple && !isVisited){
+        $("#addToHomeModal").fadeIn().css("display", "flex")
+        localStorage.setItem('pwa', "true")
+      }
+      $("#installPwaButton").on('click', () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+              console.log('Installed App');
+            } else {
+              console.log('refused');
+            }
+            deferredPrompt = null;
+          });
+        }
+        installPwaModal.hide();
+      })
+      $(".closePwaModal").on('click', function() {
+        $(this).closest(".pwaModal").hide()
+      });
+
+
     let footer_about = $("#opendata-footer-about");
     let screen_size_alert = $("#screen-size-alert");
     if(isMobile){
