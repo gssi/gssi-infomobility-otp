@@ -1023,6 +1023,8 @@ Analyst's webinterface was broken by that
   };*/
   var isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)
   var isApple = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)/i)
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator.standalone === true);
+  const isNotInIframe = window.self === window.top;
   //Collapsed = Open
   let deferredPrompt, installPwaModal;
   const isVisited = localStorage.getItem('visited')
@@ -1032,7 +1034,7 @@ Analyst's webinterface was broken by that
     deferredPrompt = e;
     installPwaModal = $("#installPwaModal")
 
-    if(isMobile && !isApple && !isVisited){
+    if(isMobile && !isApple && !isVisited && !isStandalone && isNotInIframe){
       installPwaModal.fadeIn().css("display", "flex")
       localStorage.setItem('visited', "true")
     }
@@ -1040,7 +1042,7 @@ Analyst's webinterface was broken by that
   });
 
   $(document).ready(function(){
-      if(isApple && !isVisited){
+      if(isApple && !isVisited && !isStandalone && isNotInIframe){
         $("#addToHomeModal").fadeIn().css("display", "flex")
         localStorage.setItem('pwa', "true")
       }
