@@ -151,6 +151,45 @@ http://docs.opentripplanner.org/en/latest/Getting-OTP/
 You may also choose to build OTP from its source code. If you will be modifying OTP you will need to know how to rebuild it (though your IDE may take care of this build cycle for you).
 > remember to use `-DskipTests` in *maven* command to avoid tests execution
 
+# UPDATE 2025 - INSTALL onebusaway MANUALLY
+The registry of *onebusaway* was dismissed. So you need to install the libraries manually via maven.
+You can find sources of required packages in the root of this project.
+```
+mvn install:install-file \                                                                                                                                                                        ✔
+  -Dfile=onebusaway/1.1.10/onebusaway-1.1.10.pom \
+  -DgroupId=org.onebusaway \
+  -DartifactId=onebusaway \
+  -Dversion=1.1.10 \
+  -Dpackaging=pom
+```
+```
+ mvn install:install-file \                                                                                                                                                                        ✔
+  -Dfile=Bianchi/mvn/onebusaway-csv-entities/1.1.6/onebusaway-csv-entities-1.1.6.jar \
+  -DpomFile=Bianchi/mvn/onebusaway-csv-entities/1.1.6/onebusaway-csv-entities-1.1.6.pom \
+  -DgroupId=org.onebusaway \
+  -DartifactId=onebusaway-csv-entities \
+  -Dversion=1.1.6 \
+  -Dpackaging=jar
+```
+```
+ mvn install:install-file \                                                                                                                                                                        ✔
+  -Dfile=Bianchi/mvn/onebusaway-gtfs/1.3.41/onebusaway-gtfs-1.3.41.jar \
+  -DpomFile=Bianchi/mvn/onebusaway-gtfs/1.3.41/onebusaway-gtfs-1.3.41.pom \
+  -DgroupId=org.onebusaway \
+  -DartifactId=onebusaway-gtfs \
+  -Dversion=1.3.41 \
+  -Dpackaging=jar
+```
+```
+mvn install:install-file \                                                                                                                                                                        ✔
+  -Dfile=Bianchi/mvn/onebusaway-gtfs-modules/1.3.41/onebusaway-gtfs-modules-1.3.41.pom \
+  -DgroupId=org.onebusaway \
+  -DartifactId=onebusaway-gtfs-modules \
+  -Dversion=1.3.41 \
+  -Dpackaging=pom
+```
+
+
 # Required Mobility Data
 ### GTFS for Transit Schedules and Stops
 ransport agencies throughout the world provide GTFS schedules to the public. Transitland has a registry of feeds and TransitFeeds also provides an extensive catalog. The best option is often to simply fetch the data directly from a transit operator or agency.

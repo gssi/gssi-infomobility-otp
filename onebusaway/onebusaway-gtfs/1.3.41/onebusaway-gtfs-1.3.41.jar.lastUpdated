@@ -1,0 +1,15 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Sep 11 01:55:17 CEST 2025
+http\://nexus.onebusaway.org/content/repositories/releases/.lastUpdated=1576079548229
+https\://repo1.maven.org/maven2/.lastUpdated=1757548514943
+https\://oss.sonatype.org/content/repositories/snapshots/.error=
+https\://people.apache.org/repo/m1-ibiblio-rsync-repository/org.apache.axis2/.lastUpdated=1757548516059
+https\://oss.sonatype.org/content/repositories/snapshots/.lastUpdated=1757548517495
+https\://download.osgeo.org/webdav/geotools/.error=
+https\://download.osgeo.org/webdav/geotools/.lastUpdated=1757548515539
+https\://maven.conveyal.com/.error=
+https\://repo.maven.apache.org/maven2/.lastUpdated=1757548517986
+https\://repo.maven.apache.org/maven2/.error=
+https\://people.apache.org/repo/m1-ibiblio-rsync-repository/org.apache.axis2/.error=
+https\://maven.conveyal.com/.lastUpdated=1757548517898
+https\://repo1.maven.org/maven2/.error=
